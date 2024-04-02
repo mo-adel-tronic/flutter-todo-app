@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/constants.dart';
 import 'package:todo_app/widgets/add_task.dart';
 import 'package:todo_app/widgets/app_bar.dart';
@@ -6,19 +7,8 @@ import 'package:todo_app/widgets/tasks_list.dart';
 import 'package:todo_app/widgets/tasks_info.dart';
 import 'package:todo_app/model/tasks.dart';
 
-class TodoScreen extends StatefulWidget {
+class TodoScreen extends StatelessWidget {
   const TodoScreen({super.key});
-
-  @override
-  State<TodoScreen> createState() => _TodoScreenState();
-}
-
-class _TodoScreenState extends State<TodoScreen> {
-  List<Task> tasks = [];
-
-  void updateTasks () {
-    setState(() {});
-  }
 
   @override
   Widget build (BuildContext context) {
@@ -29,12 +19,7 @@ class _TodoScreenState extends State<TodoScreen> {
           showModalBottomSheet(context: context, 
           isScrollControlled: true,
           builder: (context) {
-            return AddTask(addNewTask: (newVal) {
-              setState(() {
-                tasks.add(Task(content: newVal));
-              });
-              Navigator.pop(context);
-            },);
+            return const AddTask();
           });
         },
         backgroundColor: secColor,
@@ -55,7 +40,7 @@ class _TodoScreenState extends State<TodoScreen> {
             /***************
             Start Tasks Info
             ***************/
-            TaskInfo(done: Task.countDone, due: Task.countDue,),
+            TaskInfo(done: Provider.of<TaskData>(context).countDone, due: Provider.of<TaskData>(context).countDue,),
             const SizedBox(height: 20,),
             Expanded(
               child: Container(
@@ -66,7 +51,7 @@ class _TodoScreenState extends State<TodoScreen> {
                 /***************
                 Start Tasks List
                 ***************/
-                child: TaskLists(tasks: tasks, updateTasks: updateTasks,),
+                child: const TaskLists(),
               ),
             ),
             const SizedBox(height: 40,)

@@ -1,29 +1,51 @@
 // ignore_for_file: prefer_initializing_formals
 
-class Task {
-  String? content;
-  bool? isDone;
+import 'package:flutter/material.dart';
+
+mixin Task {
   static int countDone = 0;
   static int countDue = 0;
+}
 
-  Task({required String content,bool isDone = false}) {
+class SingleTaskData with Task {
+  String? content;
+  bool? isDone;
+  SingleTaskData({required String content,bool isDone = false}) {
     this.content = content;
     this.isDone = isDone;
     if(isDone) {
-      countDone++;
+      Task.countDone++;
     } else {
-      countDue++;
+      Task.countDue++;
     }
   }
 
   void changeTaskState() {
     isDone = !isDone!;
     if(isDone!) {
-      countDone++;
-      countDue--;
+      Task.countDone++;
+      Task.countDue--;
     } else {
-      countDone--;
-      countDue++;
+      Task.countDone--;
+      Task.countDue++;
     }
+  }
+}
+class TaskData extends ChangeNotifier with Task {
+  List<SingleTaskData> tasks = [];
+  int countDone = Task.countDone;
+  int countDue = Task.countDue;
+
+  void updateTask(SingleTaskData task) {
+    task.changeTaskState();
+    countDone = Task.countDone;
+    countDue = Task.countDue;
+    notifyListeners();
+  }
+
+  void addTask(String taskContent) {
+    tasks.add(SingleTaskData(content: taskContent));
+    countDue = Task.countDue;
+    notifyListeners();
   }
 }

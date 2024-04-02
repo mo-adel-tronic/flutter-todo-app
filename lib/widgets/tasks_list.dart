@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/constants.dart';
 import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/widgets/text.dart';
 
 class TaskLists extends StatelessWidget {
-  final List<Task> tasks;
-  final Function updateTasks;
-  const TaskLists({super.key, required this.tasks, required this.updateTasks});
+  const TaskLists({super.key});
   @override
   Widget build (BuildContext context) {
-    return ListView.builder(
-      itemCount: tasks.length,
-      itemBuilder: (context, i) {
-        return SingleTask(task: tasks[i], updateTasks: updateTasks);
-      });
+    return Consumer<TaskData>(
+      builder: (context, taskData, child) {
+        return ListView.builder(
+        itemCount: taskData.tasks.length,
+        itemBuilder: (context, i) {
+          return SingleTask(task: taskData.tasks[i], changeTaskState: (task) {
+            taskData.updateTask(task);
+          },);
+        });
+      },
+    );
   }
 }
 
-class SingleTask extends StatefulWidget {
-  final Task task;
-  final Function updateTasks;
-  const SingleTask({super.key, required this.task, required this.updateTasks});
-
-  @override
-  State<SingleTask> createState() => _SingleTaskState();
-}
-
-class _SingleTaskState extends State<SingleTask> {
+class SingleTask extends StatelessWidget {
+  final SingleTaskData task;
+  final Function changeTaskState;
+  const SingleTask({super.key, required this.task, required this.changeTaskState});
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +33,16 @@ class _SingleTaskState extends State<SingleTask> {
       children: [
         ListTile(
           title: smallText(
-            widget.task.content!,
+            task.content!,
             color: Colors.black54,
           ),
           titleTextStyle: TextStyle(
-            decoration: widget.task.isDone!? TextDecoration.lineThrough : null
+            decoration: task.isDone!? TextDecoration.lineThrough : null
           ),
           trailing: Checkbox(
-            value: widget.task.isDone,
+            value: task.isDone,
             onChanged: (newVal) {
-              setState(() {
-                widget.task.changeTaskState();
-                widget.updateTasks();
-              });
+              changeTaskState(task);
             },
             fillColor: MaterialStateColor.resolveWith((states) {
               return states.contains(MaterialState.selected)? mainColor:Colors.transparent;

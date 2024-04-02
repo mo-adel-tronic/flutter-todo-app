@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/constants.dart';
+import 'package:todo_app/model/tasks.dart';
 
 class AddTask extends StatelessWidget {
-  final Function addNewTask;
-  const AddTask({super.key, required this.addNewTask});
+  const AddTask({super.key});
   @override
   Widget build (BuildContext context) {
     String txtFieldData = '';
@@ -35,7 +36,9 @@ class AddTask extends StatelessWidget {
                   const SizedBox(height: 20,),
                   TextButton(
                   onPressed: () {
-                    addNewTask(txtFieldData);
+                    // because i want to rerender tasks and return it, so we will stop listen
+                    Provider.of<TaskData>(context, listen: false).addTask(txtFieldData);
+                    Navigator.pop(context);
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: mainColor,
