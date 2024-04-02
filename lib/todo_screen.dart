@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants.dart';
+import 'package:todo_app/widgets/add_task.dart';
 import 'package:todo_app/widgets/app_bar.dart';
-import 'package:todo_app/widgets/tasks.dart';
-import 'package:todo_app/widgets/tasks_number.dart';
+import 'package:todo_app/widgets/tasks_list.dart';
+import 'package:todo_app/widgets/tasks_info.dart';
+import 'package:todo_app/model/tasks.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
+
+  @override
+  State<TodoScreen> createState() => _TodoScreenState();
+}
+
+class _TodoScreenState extends State<TodoScreen> {
+  List<Task> tasks = [];
+
+  void updateTasks () {
+    setState(() {});
+  }
+
   @override
   Widget build (BuildContext context) {
     return Scaffold(
@@ -15,45 +29,12 @@ class TodoScreen extends StatelessWidget {
           showModalBottomSheet(context: context, 
           isScrollControlled: true,
           builder: (context) {
-            return SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom,
-                left: 15, right: 15),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Add Task', 
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: mainColor
-                      ),),
-                    ),
-                    const TextField(
-                      autofocus: true,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20,),
-                    TextButton(
-                    onPressed: null,
-                    style: TextButton.styleFrom(
-                      backgroundColor: mainColor,
-                      shape: BeveledRectangleBorder()
-                    ),
-                    child: const Text('Add Task', style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),),
-                    )
-                  ],
-                ),
-              ),
-            );
+            return AddTask(addNewTask: (newVal) {
+              setState(() {
+                tasks.add(Task(content: newVal));
+              });
+              Navigator.pop(context);
+            },);
           });
         },
         backgroundColor: secColor,
@@ -67,8 +48,14 @@ class TodoScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            todoAppBar(),
-            todoTasksNumbers(),
+            /***************
+            Start Todo AppBar
+            ***************/
+            const TodoAppBar(),
+            /***************
+            Start Tasks Info
+            ***************/
+            TaskInfo(done: Task.countDone, due: Task.countDue,),
             const SizedBox(height: 20,),
             Expanded(
               child: Container(
@@ -76,7 +63,10 @@ class TodoScreen extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5)
                 ),
-                child: todoItems(),
+                /***************
+                Start Tasks List
+                ***************/
+                child: TaskLists(tasks: tasks, updateTasks: updateTasks,),
               ),
             ),
             const SizedBox(height: 40,)

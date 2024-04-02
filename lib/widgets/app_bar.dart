@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget todoAppBar() {
-  return const Padding(
+class TodoAppBar extends StatelessWidget {
+  const TodoAppBar({super.key});
+  @override
+  Widget build (BuildContext context) {
+    return const Padding(
     padding: EdgeInsets.only(top: 40, bottom: 80),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -21,4 +24,5 @@ Widget todoAppBar() {
       ],
     ),
   );
+  }
 }
