@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/todo_screen.dart';
 
-void main() {
-  // Statfull Handlling State 
+void main() { 
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -11,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build (BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodoScreen(),
+      home: Scaffold(),
     );
   }
 }
