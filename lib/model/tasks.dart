@@ -10,10 +10,8 @@ mixin Task {
 class SingleTaskData with Task {
   String? content;
   bool? isDone;
-  SingleTaskData({required String content,bool isDone = false}) {
-    this.content = content;
-    this.isDone = isDone;
-    if(isDone) {
+  SingleTaskData({required this.content, this.isDone = false}) {
+    if(isDone!) {
       Task.countDone++;
     } else {
       Task.countDue++;
