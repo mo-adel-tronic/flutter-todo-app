@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
+// RDBSM SQL
 class SqlDB {
   static Database? _db;
 
@@ -37,7 +38,7 @@ CREATE TABLE "notes" (
     return _db;
   }
 
-  // ****** Usage ****************
+  // ****** Usage **************** CRUD
   Future<List<Map>> readData(String sql) async {
     Database? mydb = await getDb();
     return await mydb!.rawQuery(sql); 
