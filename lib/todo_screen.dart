@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants.dart';
+import 'package:todo_app/model/sqldb.dart';
 import 'package:todo_app/model/task_data.dart';
 import 'package:todo_app/widgets/add_task.dart';
 import 'package:todo_app/widgets/task_info.dart';
@@ -20,6 +21,7 @@ class _TodoScreenState extends State<TodoScreen> {
   }
   @override
   Widget build (BuildContext context) {
+    SqlDB().readData('SELECT * FROM notes').then((value) => print(value));
     return Scaffold(
       backgroundColor: mainColor,
       floatingActionButton: FloatingActionButton(

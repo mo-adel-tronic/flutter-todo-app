@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants.dart';
+import 'package:todo_app/model/sqldb.dart';
 
 class AddTask extends StatelessWidget {
   final Function addNewTask;
@@ -36,6 +37,7 @@ class AddTask extends StatelessWidget {
                   TextButton(
                   onPressed: () {
                     addNewTask(txtFieldData);
+                    SqlDB().insertData("INSERT INTO notes (note_body) VALUES('$txtFieldData')");
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: mainColor,

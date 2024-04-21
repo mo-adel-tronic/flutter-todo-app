@@ -9,7 +9,7 @@ class SqlDB {
 
     Database todoDb = await openDatabase(sqlPath,
     onCreate: _onCreate,
-    version: 1,
+    version: 2,
     onUpgrade: _onupgrade
     );
     return todoDb;
@@ -27,7 +27,8 @@ CREATE TABLE "notes" (
     await db.execute("""
 CREATE TABLE "notes" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "note_body" TEXT NOT NULL 
+  "note_body" TEXT NOT NULL,
+  "finished" INTEGER DEFAULT 0
 );
 """);
   }
