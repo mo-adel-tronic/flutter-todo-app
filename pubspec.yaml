@@ -31,7 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth:
   cloud_firestore:
-  firebase_core: null
+  firebase_core:
   flutter:
     sdk: flutter
   path: ^1.8.3

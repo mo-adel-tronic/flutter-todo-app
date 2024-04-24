@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants.dart';
 import 'package:todo_app/model/task_data.dart';
@@ -44,20 +44,17 @@ class _TodoScreenState extends State<TodoScreen> {
       appBar: AppBar(title: const Text('todo app'),
       actions: [
         MaterialButton(onPressed: () async{
-          try {
-            final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-              email: 'm@gmail.com',
-              password: '123456',
-            );
-          } on FirebaseAuthException catch (e) {
-            if (e.code == 'weak-password') {
-              print('The password provided is too weak.');
-            } else if (e.code == 'email-already-in-use') {
-              print('The account already exists for that email.');
-            }
-          } catch (e) {
-            print(e);
-          }
+          var db = FirebaseFirestore.instance;
+          // Create a new user with a first and last name
+          final user = <String, dynamic>{
+            "first": "Ada",
+            "last": "Lovelace",
+            "born": 1815
+          };
+
+          // Add a new document with a generated ID
+          db.collection("users").add(user).then((DocumentReference doc) =>
+            print('DocumentSnapshot added with ID: ${doc.id}'));
         }, child: const Text('add new user'),)
       ],),
       body: Padding(
