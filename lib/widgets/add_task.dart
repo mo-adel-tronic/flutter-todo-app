@@ -38,6 +38,7 @@ class AddTask extends StatelessWidget {
                   onPressed: () {
                     addNewTask(txtFieldData);
                     SqlDB().insertData("INSERT INTO notes (note_body) VALUES('$txtFieldData')");
+
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: mainColor,

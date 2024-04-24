@@ -21,7 +21,7 @@ class _TodoScreenState extends State<TodoScreen> {
   }
   @override
   Widget build (BuildContext context) {
-    SqlDB().readData('SELECT * FROM notes').then((value) => print(value));
+    SqlDB().readData('SELECT * FROM notes WHERE id = 1').then((value) => print(value));
     return Scaffold(
       backgroundColor: mainColor,
       floatingActionButton: FloatingActionButton(
@@ -43,9 +43,7 @@ class _TodoScreenState extends State<TodoScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20
-        ),
+        padding: const EdgeInsets.only(left: 5),
         child: Column(
           children: [
             const TodoAppBar(),
