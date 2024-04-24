@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/todo_screen.dart';
+import 'package:todo_app/location.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build (BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodoScreen(),
+      home: TodoLocation(),
     );
   }
 }

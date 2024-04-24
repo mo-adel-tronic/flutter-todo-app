@@ -36,6 +36,8 @@ dependencies:
     sdk: flutter
   path: ^1.8.3
   sqflite: null
+  geolocator:
+  google_maps_flutter:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
